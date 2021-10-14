@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/ASUS/.gradle/caches/transforms-3/4ecd700c773cf5624732e3577602f1ea/transformed/appcompat-1.3.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/drawable/my_border.xml" value="0.72" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/drawable/my_border_white.xml" value="0.2703125" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout-land/add_meeting_layout.xml" value="0.2" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout-land/listview.xml" value="0.4088541666666667" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout-land/meetings_display.xml" value="0.36560509554140125" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/add_meeting_layout.xml" value="0.2" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/listview.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/meetings_display.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
