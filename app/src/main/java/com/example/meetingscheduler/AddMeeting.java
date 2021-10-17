@@ -52,15 +52,15 @@ public class AddMeeting extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_meeting_layout);
 
-        buttonDate = findViewById(R.id.buttonDate);
+        buttonDate = findViewById(R.id.button_date);
         buttonDate.setOnClickListener(this);
-        buttonStartTime = findViewById(R.id.buttonStartTime);
+        buttonStartTime = findViewById(R.id.button_start_time);
         buttonStartTime.setOnClickListener(this);
-        buttonEndTime = findViewById(R.id.buttonEndTime);
+        buttonEndTime = findViewById(R.id.button_end_time);
         buttonEndTime.setOnClickListener(this);
-        buttonSubmit = findViewById(R.id.buttonSubmit);
+        buttonSubmit = findViewById(R.id.button_submit);
         buttonSubmit.setOnClickListener(this);
-        editText = findViewById(R.id.textViewDescription);
+        editText = findViewById(R.id.tv_description);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -119,34 +119,10 @@ public class AddMeeting extends AppCompatActivity implements View.OnClickListene
             try {
                 if (!validateFields())
                     return;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Log.d("hello", date);
-            Log.d("hello", startTime);
-            Log.d("hello", endTime);
-            Log.d("hello", description);
-
-
-            try {
                 storeData();
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.d("hello", String.valueOf(jsonArray));
-            SharedPrefHelper.create(this);
-            //SharedPrefHelper.store();
-            String val = SharedPrefHelper.getJsonArray();
-            JSONArray jsonObj = null;
-            if (val != null) {
-                try {
-                    jsonObj = new JSONArray(val);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (jsonObj != null)
-                Log.d("hello", jsonObj.toString());
         }
     }
 
@@ -181,7 +157,6 @@ public class AddMeeting extends AppCompatActivity implements View.OnClickListene
             jsonArray.put(student1);
         }
         getData();
-        Log.d("hello", String.valueOf(Meeting.meetingMap));
         SharedPrefHelper.store();
         startActivity(new Intent(this, DisplayMeetings.class));
     }
@@ -197,18 +172,19 @@ public class AddMeeting extends AppCompatActivity implements View.OnClickListene
                 List<String> lst = new ArrayList<>();
                 String key = (String) keys.next();
                 for (int j = 0; j < js.getJSONArray(key).length(); j++) {
-                    JSONObject jobj = (JSONObject) js.getJSONArray(key).get(j);
-                    lst.add(String.valueOf(jobj.get("start_time")));
-                    lst.add(String.valueOf(jobj.get("end_time")));
-                    lst.add(String.valueOf(jobj.get("description")));
+                    JSONObject jsonObj = (JSONObject) js.getJSONArray(key).get(j);
+                    lst.add(String.valueOf(jsonObj.get("start_time")));
+                    lst.add(String.valueOf(jsonObj.get("end_time")));
+                    lst.add(String.valueOf(jsonObj.get("description")));
                 }
                 Meeting.meetingMap.put(key, lst);
             }
         }
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private boolean validateFields() throws ParseException {
+    private boolean validateFields() throws ParseException, JSONException {
         Log.d("hello1", "control");
         if (date == null) {
             Toast.makeText(this, "Enter Date", Toast.LENGTH_SHORT).show();
@@ -229,8 +205,6 @@ public class AddMeeting extends AppCompatActivity implements View.OnClickListene
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         String currentDate = dateFormat.format(new Date());
         Date date1 = dateFormat.parse(date);
-        Log.d("hello1", currentDate);
-        Log.d("hello1", String.valueOf(date1));
         if (!((new Date()).before(date1)) && !(currentDate.equals(date))) {
             Toast.makeText(this, "Invalid date", Toast.LENGTH_SHORT).show();
             return false;
@@ -243,37 +217,28 @@ public class AddMeeting extends AppCompatActivity implements View.OnClickListene
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.US);
         Date dateStart = simpleDateFormat.parse(startTime);
         Date currTime = simpleDateFormat.parse(t);
-        long differenceInMilliSeconds = 0;
-        if (currTime != null) if (dateStart != null) {
-            differenceInMilliSeconds = currTime.getTime() - dateStart.getTime();
-        }
-        Log.d("hello1", String.valueOf(dateStart));
-        Log.d("hello1", String.valueOf(currTime));
-        Log.d("hello1", String.valueOf(differenceInMilliSeconds));
-        if (differenceInMilliSeconds > 0) {
+        if (currTime != null && currTime.after(dateStart)) {
             Toast.makeText(this, "Invalid time", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (Meeting.meetingMap == null)
             Meeting.meetingMap = new HashMap<>();
+        getData();
         List<String> list = Meeting.meetingMap.get(date);
 
-        Date dateStcurr = simpleDateFormat.parse(startTime);
-        Date dateEncurr = simpleDateFormat.parse(endTime);
-        if (dateEncurr != null && dateStcurr != null && dateStcurr.getTime() >= dateEncurr.getTime()) {
+        Date dateStartCurr = simpleDateFormat.parse(startTime);
+        Date dateEndCurr = simpleDateFormat.parse(endTime);
+        if (dateEndCurr != null && dateStartCurr != null && dateStartCurr.after(dateEndCurr)) {
             Toast.makeText(this, "Invalid time interval", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        Log.d("why", String.valueOf(list));
-        Log.d("why", String.valueOf(Meeting.meetingMap));
-        Log.d("why", date);
         if (list != null) {
             for (int i = 0; i < list.size(); i += 3) {
-                Date dateS = simpleDateFormat.parse(list.get(i + 1));
-                Date dateE = simpleDateFormat.parse(list.get(i + 2));
-                if (dateE != null && dateStcurr != null && dateS != null && dateEncurr != null && (dateEncurr.getTime() > dateS.getTime() || dateStcurr.getTime() < dateE.getTime())) {
+                Date dateS = simpleDateFormat.parse(list.get(i));
+                Date dateE = simpleDateFormat.parse(list.get(i + 1));
+                if (dateE != null && dateStartCurr != null && dateS != null && dateEndCurr != null && !(dateStartCurr.after(dateE) || dateEndCurr.before(dateS))) {
                     Toast.makeText(this, "Slot not available", Toast.LENGTH_SHORT).show();
                     return false;
                 }

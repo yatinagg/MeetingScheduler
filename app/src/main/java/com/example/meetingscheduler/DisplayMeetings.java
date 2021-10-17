@@ -3,7 +3,6 @@ package com.example.meetingscheduler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,10 +23,8 @@ import java.util.Locale;
 public class DisplayMeetings extends AppCompatActivity {
 
     private Button buttonSchedule;
-    private List<MeetingView> meetingViews;
     private Button buttonPrev;
     private Button buttonNext;
-    private TextView textViewDate;
     private Date date;
     private String dateString;
 
@@ -37,6 +34,7 @@ public class DisplayMeetings extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meetings_display);
+        SharedPrefHelper.create(this);
 
         Log.d("hello", "create");
         date = new Date();
@@ -47,11 +45,11 @@ public class DisplayMeetings extends AppCompatActivity {
     }
 
     private void setupView() {
-        buttonSchedule = findViewById(R.id.buttonSchedule);
-        buttonPrev = findViewById(R.id.buttonPrev);
-        buttonNext = findViewById(R.id.buttonNext);
-        textViewDate = findViewById(R.id.textViewDate);
-        meetingViews = new ArrayList<>();
+        buttonSchedule = findViewById(R.id.button_schedule);
+        buttonPrev = findViewById(R.id.button_prev);
+        buttonNext = findViewById(R.id.button_next);
+        TextView textViewDate = findViewById(R.id.tv_date);
+        List<MeetingView> meetingViews = new ArrayList<>();
 
         textViewDate.setText(dateString);
         if (Meeting.meetingMap == null)
@@ -70,7 +68,7 @@ public class DisplayMeetings extends AppCompatActivity {
         }
         MeetingViewAdapter meetingViewAdapter = new MeetingViewAdapter(this, meetingViews);
 
-        ListView meetingListView = findViewById(R.id.listView);
+        ListView meetingListView = findViewById(R.id.list_view);
         meetingListView.setAdapter(meetingViewAdapter);
     }
 

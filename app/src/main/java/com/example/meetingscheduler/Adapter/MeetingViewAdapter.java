@@ -37,14 +37,14 @@ public class MeetingViewAdapter extends ArrayAdapter<MeetingView> {
         MeetingView currentNumberPosition = getItem(position);
 
         if (getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            TextView textView1 = currentItemView.findViewById(R.id.label1);
-            TextView textView2 = currentItemView.findViewById(R.id.label2);
+            TextView textView1 = currentItemView.findViewById(R.id.tv_start_end_time);
+            TextView textView2 = currentItemView.findViewById(R.id.tv_description_potrait);
             textView1.setText(String.format("%s - %s", currentNumberPosition.getMeeting().getStartTime(), currentNumberPosition.getMeeting().getEndTime()));
             textView2.setText(currentNumberPosition.getMeeting().getDescription());
         } else {
-            TextView textView1Start = currentItemView.findViewById(R.id.label1Start);
-            TextView textView1End = currentItemView.findViewById(R.id.label1End);
-            TextView textViewLabel2Land = currentItemView.findViewById(R.id.label2Land);
+            TextView textView1Start = currentItemView.findViewById(R.id.tv_start);
+            TextView textView1End = currentItemView.findViewById(R.id.tv_end);
+            TextView textViewLabel2Land = currentItemView.findViewById(R.id.tv_description_land);
             textView1Start.setText(currentNumberPosition.getMeeting().getStartTime());
             textView1End.setText(currentNumberPosition.getMeeting().getEndTime());
             textViewLabel2Land.setText(currentNumberPosition.getMeeting().getDescription());

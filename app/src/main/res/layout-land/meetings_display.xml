@@ -15,62 +15,58 @@
         android:background="#16A085"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintBottom_toTopOf="@+id/list_view"
         tools:layout_editor_absoluteX="194dp">
 
     </androidx.appcompat.widget.Toolbar>
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonSchedule"
+        app:layout_constraintBottom_toTopOf="@id/button_schedule"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="parent">
 
     </ListView>
 
     <Button
-        android:id="@+id/buttonSchedule"
+        android:id="@+id/button_schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_height="?actionBarSize"
         android:layout_marginHorizontal="20dp"
         android:backgroundTint="#16A085"
         android:text="@string/schedule_company_meeting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonPrev"
+        android:id="@+id/button_prev"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:backgroundTint="#16A085"
         android:text="@string/prev"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintBottom_toTopOf="@+id/list_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonNext"
+        android:id="@+id/button_next"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:backgroundTint="#16A085"
         android:text="@string/next"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintBottom_toTopOf="@+id/list_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewDate"
+        android:id="@+id/tv_date"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="16dp"
@@ -79,9 +75,9 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toStartOf="@+id/buttonNext"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonPrev"
+        app:layout_constraintStart_toEndOf="@+id/button_prev"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         app:layout_constraintVertical_bias="1.0" />
 

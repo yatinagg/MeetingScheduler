@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Meeting {
-    private String startTime;
-    private String endTime;
-    private String description;
+    private final String startTime;
+    private final String endTime;
+    private final String description;
     public static Map<String, List<String>> meetingMap;
 
     public Meeting(String startTime, String endTime, String description) {
