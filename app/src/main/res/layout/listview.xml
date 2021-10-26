@@ -16,7 +16,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
         android:background="#AEAEAE" />
 
     <TextView
@@ -24,6 +25,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="10dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/black"
         android:textSize="16sp" />
 

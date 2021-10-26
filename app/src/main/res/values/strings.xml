@@ -8,4 +8,18 @@
     <string name="schedule_company_meeting">SCHEDULE COMPANY MEETING</string>
     <string name="prev"><![CDATA[< PREV]]></string>
     <string name="next"><![CDATA[NEXT >]]></string>
+    <string name="date_pattern">dd-MM-yyyy</string>
+    <string name="no_meeting">No meeting is scheduled</string>
+    <string name="enter_date">Enter Date</string>
+    <string name="enter_start_time">Enter Start Time</string>
+    <string name="enter_end_time">Enter End Time</string>
+    <string name="enter_desc">Enter Description</string>
+    <string name="invalid_date">Invalid date</string>
+    <string name="hour_pattern">HH:mm</string>
+    <string name="invalid_time">Invalid time</string>
+    <string name="invalid_time_interval">Invalid time interval</string>
+    <string name="slot_not_available">Slot not available</string>
+    <string name="st_key">start_time</string>
+    <string name="et_key">end_time</string>
+    <string name="desc_key">description</string>
 </resources>

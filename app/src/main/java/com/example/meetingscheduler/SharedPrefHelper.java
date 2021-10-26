@@ -5,34 +5,45 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 // Shared preference helper
 public class SharedPrefHelper {
 
     private static SharedPreferences sharedPreferences;
-    private static SharedPreferences.Editor editor;
+    private static final String SHARED_PREF = "SharedPref1";
+    private static final String JSON_ARRAY = "value";
 
-
-    // creating the shared preference
+    /**
+     * creating the shared preference
+     *
+     * @param context the context
+     */
     public static void create(Context context) {
-        sharedPreferences = context.getSharedPreferences("SharedPref1", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
     }
 
-    // storing the data to shared preference
-    public static void store() {
-        editor.putString("value", String.valueOf(AddMeeting.jsonArray));
-        editor.apply();
+    /**
+     * save the Json Array to app specific storage
+     *
+     * @param jsonArray jsonArray of data
+     */
+    public static void saveJsonArray(JSONArray jsonArray) {
+        sharedPreferences.edit().putString(JSON_ARRAY, String.valueOf(jsonArray)).apply();
     }
 
-    private static SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
-    }
-
-    // getters
-
-    public static String getJsonArray() {
-        return SharedPrefHelper.getSharedPreferences().getString("value", null);
+    /**
+     * get Json Array from app specific storage
+     *
+     * @return Json Array which contains data
+     * @throws JSONException throws json Exception
+     */
+    public static JSONArray getJsonArray() throws JSONException {
+        if (sharedPreferences.getString(JSON_ARRAY, null) == null)
+            return new JSONArray();
+        else
+            return new JSONArray(sharedPreferences.getString(JSON_ARRAY, null));
     }
 
 }
-

@@ -13,6 +13,12 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/listview.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/meetings_display.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/MeetingScheduler/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/layout-land/activity_add_meeting.xml" value="0.19010416666666666" />
+        <entry key="app/src/main/res/layout-land/activity_meetings_display.xml" value="0.19010416666666666" />
+        <entry key="app/src/main/res/layout-land/listview.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/activity_meetings_display.xml" value="0.16134751773049646" />
+        <entry key="app/src/main/res/layout/listview.xml" value="0.32666666666666666" />
       </map>
     </option>
   </component>
