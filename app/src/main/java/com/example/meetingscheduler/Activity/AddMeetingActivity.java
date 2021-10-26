@@ -14,15 +14,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.meetingscheduler.AllMeetings;
 import com.example.meetingscheduler.Meeting;
 import com.example.meetingscheduler.R;
 import com.example.meetingscheduler.SharedPrefHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,7 +37,6 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private String startTime;
     private String endTime;
     private String description;
-    public static JSONArray jsonArray = new JSONArray();
 
 
     @Override
@@ -130,52 +129,45 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         // on click listener for buttonSubmit
         else if (view == buttonSubmit) {
             description = String.valueOf(etDescription.getText());
-            try {
-                if (!validateFields())
-                    return;
-                storeData();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!validateFields()) {
+                return;
             }
+            storeData();
             finish();
         }
     }
 
     /**
      * storeDate() to store the data in the app specific storage
-     *
-     * @throws JSONException throws json Exception
      */
-    private void storeData() throws JSONException {
-        JSONObject dataMap = new JSONObject();
-        boolean meetingFound = false;
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject js = jsonArray.getJSONObject(i);
-            if (js.has(date)) {
-                JSONArray dataDateArray = js.getJSONArray(date);
-                JSONObject dataMeeting = new JSONObject();
-                dataMeeting.put(getString(R.string.st_key), startTime);
-                dataMeeting.put(getString(R.string.et_key), endTime);
-                dataMeeting.put(getString(R.string.desc_key), description);
-                dataDateArray.put(dataMeeting);
-                dataMap.put(date, dataDateArray);
-                meetingFound = true;
-                break;
+    private void storeData() {
+        Meeting meeting = new Meeting(startTime, endTime, description);
+        List<Meeting> meetings = AllMeetings.meetingMap.get(date);
+        if (meetings == null)
+            meetings = new ArrayList<>();
+        meetings.add(meeting);
+        AllMeetings.meetingMap.put(date, meetings);
+        sortData();
+        SharedPrefHelper.saveJsonArray();
+    }
+
+    /**
+     * sortData to sort the data according to start Time
+     */
+
+    private void sortData() {
+        if (AllMeetings.meetingMap == null)
+            AllMeetings.meetingMap = new HashMap<>();
+        for (String key : AllMeetings.meetingMap.keySet()) {
+            List<Meeting> listBeforeSort = AllMeetings.meetingMap.get(key);
+            if (listBeforeSort == null) {
+                listBeforeSort = new ArrayList<>();
             }
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(listBeforeSort, Comparator.comparing(Meeting::getStartTime));
+            }
+            AllMeetings.meetingMap.put(key, listBeforeSort);
         }
-
-        JSONArray st = new JSONArray();
-        if (!meetingFound) {
-            JSONObject dataMeeting = new JSONObject();
-            dataMeeting.put(getString(R.string.st_key), startTime);
-            dataMeeting.put(getString(R.string.et_key), endTime);
-            dataMeeting.put(getString(R.string.desc_key), description);
-            st.put(dataMeeting);
-            dataMap.put(date, st);
-            jsonArray.put(dataMap);
-        }
-        SharedPrefHelper.saveJsonArray(jsonArray);
     }
 
     /**
@@ -206,13 +198,13 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
             return false;
         }
 
-        if (Meeting.meetingMap == null)
-            Meeting.meetingMap = new HashMap<>();
+        if (AllMeetings.meetingMap == null)
+            AllMeetings.meetingMap = new HashMap<>();
 
-        List<List<String>> list = Meeting.meetingMap.get(date);
+        List<Meeting> list = AllMeetings.meetingMap.get(date);
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if (!(startTime.compareTo(list.get(i).get(1)) > 0 || endTime.compareTo(list.get(i).get(0)) < 0)) {
+                if (!(startTime.compareTo(list.get(i).getEndTime()) > 0 || endTime.compareTo(list.get(i).getStartTime()) < 0)) {
                     Toast.makeText(this, R.string.slot_not_available, Toast.LENGTH_SHORT).show();
                     return false;
                 }

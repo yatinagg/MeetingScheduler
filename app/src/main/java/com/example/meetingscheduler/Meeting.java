@@ -1,8 +1,5 @@
 package com.example.meetingscheduler;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Meeting class
  */
@@ -10,7 +7,6 @@ public class Meeting {
     private final String startTime;
     private final String endTime;
     private final String description;
-    public static Map<String, List<List<String>>> meetingMap;
 
     /**
      * Constructor of meeting class

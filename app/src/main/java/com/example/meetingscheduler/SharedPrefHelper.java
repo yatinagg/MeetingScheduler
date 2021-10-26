@@ -5,8 +5,12 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 
 // Shared preference helper
 public class SharedPrefHelper {
@@ -26,24 +30,23 @@ public class SharedPrefHelper {
 
     /**
      * save the Json Array to app specific storage
-     *
-     * @param jsonArray jsonArray of data
      */
-    public static void saveJsonArray(JSONArray jsonArray) {
-        sharedPreferences.edit().putString(JSON_ARRAY, String.valueOf(jsonArray)).apply();
+    public static void saveJsonArray() {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(AllMeetings.meetingMap);
+        sharedPreferences.edit().putString(JSON_ARRAY, jsonString).apply();
     }
 
     /**
      * get Json Array from app specific storage
-     *
-     * @return Json Array which contains data
-     * @throws JSONException throws json Exception
      */
-    public static JSONArray getJsonArray() throws JSONException {
-        if (sharedPreferences.getString(JSON_ARRAY, null) == null)
-            return new JSONArray();
-        else
-            return new JSONArray(sharedPreferences.getString(JSON_ARRAY, null));
+    public static void getJsonArray() {
+        if (sharedPreferences.getString(JSON_ARRAY, null) != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<Map<String, List<Meeting>>>() {
+            }.getType();
+            AllMeetings.meetingMap = gson.fromJson(sharedPreferences.getString(JSON_ARRAY, null), type);
+        }
     }
 
 }
